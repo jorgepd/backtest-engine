@@ -1,44 +1,40 @@
 
-create table if not exists tb_backtest_info (
-    id text primary key,
-    name text not null
-);
-
-
-create table if not exists tb_backtest_portfolio_relation (
-    id integer primary key,
-    backtest_id text not null,
-    portfolio_id text not null
-);
-
-
-create table if not exists tb_portfolio_strategy_relation (
-    id integer primary key,
-    portfolio_id text not null,
-    strategy_id text not null
-);
-
-
 create table if not exists tb_strategy_parameters (
-    id text primary key,
-    desc text not null
+    strat_id text primary key,
+    backtest_name text not null,
+    type text not null,
+    symbol_A text not null,
+    symbol_B text not null,
+    lookback real not null,
+    entry_mult real not null,
+    exit_mult real not null,
+    order_size real not null
 );
 
 
 create table if not exists tb_metrics (
-    id integer primary key,
-    msg text not null
+    strat_id text primary key,
+    mean_performance real not null,
+    mean_time real not null,
+    count real not null,
+    count_win real not null,
+    pct_win real not null,
+    pct_win real not null,
+    win_mean_performance real not null,
+    loss_mean_performance real not null,
+    sharpe real not null
 );
 
 
 create table if not exists tb_trades (
     id text primary key,
-    strategy_id text not null
+    date text not null,
+    strategy_id text not null,
+    trade_id text not null,
+    type text not null,
+    symbol text not null,
+    direction text not null,
+    quantity text not null,
+    price text not null,
+    commission text not null
 );
-
-
-create table if not exists tb_holdings (
-    id integer primary key,
-    portfolio_id text not null
-);
-

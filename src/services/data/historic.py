@@ -6,7 +6,7 @@ from functools import reduce
 # custom imports
 from .base import BaseDataHandler
 from src.services.events import MarketEvent
-from src.db import market_data
+from src.db import market_data_db
 
 
 class HistoricDataHandler(BaseDataHandler):
@@ -23,7 +23,7 @@ class HistoricDataHandler(BaseDataHandler):
     def _load_data(self):
         # get data
         for s in self.symbol_ls:
-            self.symbol_data[s] = market_data.select([s])
+            self.symbol_data[s] = market_data_db.select([s])
 
         # create combined index
         comb_index = reduce(pd.Index.union, (df.index for df in self.symbol_data.values()))

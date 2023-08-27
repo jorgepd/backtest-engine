@@ -7,3 +7,6 @@
 
 # logging
 **/logs/*log*
+
+# notebooks
+**/*.ipynb

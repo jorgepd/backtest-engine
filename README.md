@@ -5,7 +5,7 @@ An event driven backtesting engine.
 
 # TODO:
 * requirements
-* backtest database
-* backtest metrics
+* save trades
+* calc and save metrics
 * backtest result visualization
 * live trading component

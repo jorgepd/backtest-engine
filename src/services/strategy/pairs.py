@@ -7,6 +7,7 @@ import uuid
 # custom imports
 from .base import BaseStrategy
 from src.services.events import OrderEvent
+from src.db import strategy_db
 
 
 
@@ -15,7 +16,7 @@ class PairsTradingStrategy(BaseStrategy):
     A pairs trading strategy that trades on mean reversion.
     '''
 
-    def __init__(self, bars, event_q, type, symbol_A, symbol_B, lookback, entry_mult, exit_mult, order_size):
+    def __init__(self, bt_name, bars, event_q, type, symbol_A, symbol_B, lookback, entry_mult, exit_mult, order_size):
         '''
         Parameters:
         bars - DataHandler with bars data
@@ -36,6 +37,19 @@ class PairsTradingStrategy(BaseStrategy):
         self.strategy_id = str(uuid.uuid4())
         self.bars = bars
         self.event_q = event_q
+
+        # save info
+        strategy_db.insert(pd.DataFrame({
+            'strat_id': [self.strategy_id],
+            'backtest_name': [bt_name],
+            'type': [type],
+            'symbol_A': [symbol_A],
+            'symbol_B': [symbol_B],
+            'lookback': [lookback],
+            'entry_mult': [entry_mult],
+            'exit_mult': [exit_mult],
+            'order_size': [order_size]
+        }))
 
         # strategy specific properties
         self.trade_id = None

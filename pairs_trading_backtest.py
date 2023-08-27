@@ -51,7 +51,7 @@ for p in tqdm(parm):
     bars.new_instance(event_q)
     port = NaivePortfolio(bars, event_q)
     broker = SimulatedOrderRouter(bars, event_q)
-    strat = PairsTradingStrategy(bars, event_q, p[0], p[1][0], p[1][1], p[2], p[3], p[4], 50000)
+    strat = PairsTradingStrategy(bt_name, bars, event_q, p[0], p[1][0], p[1][1], p[2], p[3], p[4], 50000)
 
     # execute
     main_loop(bars, event_q, port, broker, [strat])
