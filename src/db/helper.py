@@ -15,4 +15,3 @@ def try_catch(fn):
             logger.error(e)
 
     return wrapper
-

@@ -17,4 +17,3 @@ class BasePortfolio(ABC):
     @abstractmethod
     def update_fill(self, event):
         raise NotImplementedError('Should implement update_fill()')
-

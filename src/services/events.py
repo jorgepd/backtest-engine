@@ -39,4 +39,3 @@ class FillEvent(Event):
         self.quantity = quantity
         self.price = price
         self.commission = commission
-

@@ -12,4 +12,3 @@ class BaseStrategy(ABC):
     @abstractmethod
     def calc_signals(self, event):
         raise NotImplementedError('Should implement calc_signals()')
-

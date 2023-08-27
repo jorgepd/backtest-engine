@@ -83,4 +83,3 @@ class NaivePortfolio(BasePortfolio):
 
     def _record_trade(self, event):
         pass
-

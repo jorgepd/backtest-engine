@@ -2,5 +2,8 @@
 # python generated files
 **/__pycache__
 
+# databases
+**/*.db
+
 # logging
 **/logs/*log*

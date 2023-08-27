@@ -22,13 +22,12 @@ def main_loop(bars, event_q, port, broker, strategies):
                 for s in strategies:
                     s.calc_signals()
                 port.update_timeindex()
-            
+
             elif event.type == 'SIGNAL':
                 port.update_signal(event)
-            
+
             elif event.type == 'ORDER':
                 broker.execute_order(event)
-            
+
             elif event.type == 'FILL':
                 port.update_fill(event)
-

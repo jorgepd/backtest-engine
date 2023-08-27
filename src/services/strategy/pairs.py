@@ -14,7 +14,7 @@ class PairsTradingStrategy(BaseStrategy):
     '''
     A pairs trading strategy that trades on mean reversion.
     '''
-    
+
     def __init__(self, bars, event_q, type, symbol_A, symbol_B, lookback, entry_mult, exit_mult, order_size):
         '''
         Parameters:
@@ -50,7 +50,7 @@ class PairsTradingStrategy(BaseStrategy):
         # always use long positions
         if self.type == 'SHORT':
             self.symbol_A, self.symbol_B = self.symbol_B, self.symbol_A
-    
+
 
     def calc_signals(self):
         '''
@@ -64,7 +64,7 @@ class PairsTradingStrategy(BaseStrategy):
         spread = close_A / close_B
         if len(spread) < self.lookback:
             return
-        
+
         # send entry signals
         limit, _, _ = _calc_BB(spread, self.entry_mult, 0.01)
         if (
@@ -85,7 +85,7 @@ class PairsTradingStrategy(BaseStrategy):
             self.trade_id = str(uuid.uuid4())
             self.event_q.append(OrderEvent(self.strategy_id, self.trade_id, 'ENTRY', self.symbol_A, 'BUY', self.quantity_A))
             self.event_q.append(OrderEvent(self.strategy_id, self.trade_id, 'ENTRY', self.symbol_B, 'SELL', self.quantity_B))
-        
+
         # send exit signals, no minimum deviation
         limit, _, _ = _calc_BB(spread, self.exit_mult)
         if (
@@ -131,4 +131,3 @@ def _calc_quantity(order_size, price, batch_size=1):
     quantity = order_size / price
     quantity = round(quantity / batch_size) * batch_size
     return quantity
-

@@ -16,4 +16,3 @@ class BaseDataHandler(ABC):
     @abstractmethod
     def update_bars(self):
         raise NotImplementedError('Should implement update_bars()')
-

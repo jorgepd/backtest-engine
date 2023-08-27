@@ -23,4 +23,3 @@ def select(ticker_ls=[]):
     query += ' order by date asc'
     df = pd.read_sql(query, con=market_data_engine)
     return df
-

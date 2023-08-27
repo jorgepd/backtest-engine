@@ -24,7 +24,7 @@ class HistoricDataHandler(BaseDataHandler):
         # get data
         for s in self.symbol_ls:
             self.symbol_data[s] = market_data.select([s])
-        
+
         # create combined index
         comb_index = reduce(pd.Index.union, (df.index for df in self.symbol_data.values()))
         self.date_ix = np.array(comb_index)

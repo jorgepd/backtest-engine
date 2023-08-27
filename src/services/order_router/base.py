@@ -13,4 +13,3 @@ class BaseOrderRouter(ABC):
     @abstractmethod
     def execute_order(self, event):
         raise NotImplementedError('Should implement execute_order()')
-

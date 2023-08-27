@@ -55,4 +55,3 @@ for p in tqdm(parm):
 
     # execute
     main_loop(bars, event_q, port, broker, [strat])
-
