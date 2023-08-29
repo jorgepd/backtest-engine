@@ -8,6 +8,6 @@ Example of backtest results visualization: plot_results.ipynb
 
 
 
-# TODO:
-* requirements
+### TODO:
+* requirements.txt
 * live trading component
