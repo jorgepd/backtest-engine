@@ -26,7 +26,7 @@ create table if not exists tb_metrics (
 
 
 create table if not exists tb_trades (
-    id text primary key,
+    id integer primary key,
     strat_id text not null,
     trade_id text not null,
     datetime text not null,

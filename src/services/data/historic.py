@@ -32,6 +32,7 @@ class HistoricDataHandler(BaseDataHandler):
         for s in self.symbol_ls:
             # reindex data
             self.symbol_data[s] = self.symbol_data[s].reindex(index=comb_index, method='ffill')
+            self.symbol_data[s] = self.symbol_data[s].fillna(method='bfill')
 
             # restruct data as np array
             df = self.symbol_data[s]

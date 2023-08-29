@@ -25,7 +25,7 @@ utils.clean_backtest_data(bt_name)
 
 # generate all parameter combinations
 symbols = ['AAPL', 'MSFT', 'AMZN', 'NVDA', 'META', 'TSLA', 'AVGO', 'GOOGL', 'PEP', 'ADBE']
-symbols = ['AAPL', 'MSFT']
+# symbols = ['AAPL', 'MSFT']
 pairs = itertools.combinations(symbols, 2)
 pairs = list(pairs)
 
@@ -35,9 +35,9 @@ lookbacks = np.arange(60, 300+_, 20)
 entries = np.arange(1, 3+_, 0.25)
 exits = np.arange(-0.5, 0.5+_, 0.25)
 
-lookbacks = [100, 120]
-entries = [1, 2]
-exits = [0, 0.5]
+# lookbacks = [100, 120]
+# entries = [1, 2]
+# exits = [0, 0.5]
 parm = itertools.product(type, pairs, lookbacks, entries, exits)
 parm = list(parm)
 logger.info(f'Number of backtest configurations: {len(parm)}')
@@ -48,7 +48,7 @@ bars = HistoricDataHandler(symbols)
 logger.info('Finished loading data')
 
 # iter over combinations
-logger.info(f'Estimated time is {len(parm)*2/60:.2f} minutes')
+logger.info(f'Estimated time is {len(parm)*2/60/60:.2f} hours')
 for p in tqdm(parm):
     # declare components
     event_q = deque()
