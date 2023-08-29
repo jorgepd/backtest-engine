@@ -7,6 +7,10 @@ from config import market_data_engine
 from .helper import try_catch
 
 
+'''
+For market data download, please refer to https://github.com/jorgepd/market-data
+'''
+
 
 @try_catch
 def select(ticker_ls=[]):
