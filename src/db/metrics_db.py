@@ -9,15 +9,16 @@ from .helper import try_catch
 
 
 @try_catch
-def select(id=None):
+def select(id_ls=[]):
     query = f'''
     select *
     from tb_metrics
     where 1 = 1
     '''
 
-    if id is not None:
-        query += f' and strat_id = \'{id}\''
+    if id_ls:
+        ls = '\', \''.join(id_ls)
+        query += f' and strat_id in (\'{ls}\')'
 
     df = pd.read_sql(query, con=bt_engine)
     return df
