@@ -7,22 +7,25 @@ import itertools
 import time
 
 # custom imports
+from config import logger
 from src.services import utils
 from src.services.main import main_loop
 from src.services.data import HistoricDataHandler
 from src.services.portfolio import NaivePortfolio
 from src.services.order_router import SimulatedOrderRouter
 from src.services.strategy import PairsTradingStrategy
+from src.services.metrics import calc_statistics
 
 
 # start
 start_time = time.time()
 bt_name = 'nasdaq_top10'
-print(f'Backtest name: {bt_name}')
+logger.info(f'Backtest name: {bt_name}')
 utils.clean_backtest_data(bt_name)
 
 # generate all parameter combinations
-symbols = ['AAPL', 'MSFT', 'AMZN', 'NVDA', 'GOOGL', 'META', 'TSLA', 'UNH', 'XOM', 'LLY']
+symbols = ['AAPL', 'MSFT', 'AMZN', 'NVDA', 'META', 'TSLA', 'AVGO', 'GOOGL', 'PEP', 'ADBE']
+symbols = ['AAPL', 'MSFT']
 pairs = itertools.combinations(symbols, 2)
 pairs = list(pairs)
 
@@ -32,19 +35,20 @@ lookbacks = np.arange(60, 300+_, 20)
 entries = np.arange(1, 3+_, 0.25)
 exits = np.arange(-0.5, 0.5+_, 0.25)
 
-pairs = [('AAPL', 'MSFT')]
-lookbacks = [100, 120, 140]
+lookbacks = [100, 120]
+entries = [1, 2]
+exits = [0, 0.5]
 parm = itertools.product(type, pairs, lookbacks, entries, exits)
 parm = list(parm)
-print(f'Number of backtest configurations: {len(parm)}')
+logger.info(f'Number of backtest configurations: {len(parm)}')
 
 # loading historic data
-print('Loading data...')
+logger.info('Loading data...')
 bars = HistoricDataHandler(symbols)
-print('Finished loading data')
+logger.info('Finished loading data')
 
 # iter over combinations
-print(f'Estimated time is {len(parm)*1.7/60:.2f} minutes')
+logger.info(f'Estimated time is {len(parm)*2/60:.2f} minutes')
 for p in tqdm(parm):
     # declare components
     event_q = deque()
@@ -55,3 +59,6 @@ for p in tqdm(parm):
 
     # execute
     main_loop(bars, event_q, port, broker, [strat])
+
+    # metrics
+    calc_statistics(strat.strat_id, port.trades, pd.DataFrame(port.all_holdings))

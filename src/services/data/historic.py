@@ -53,6 +53,7 @@ class HistoricDataHandler(BaseDataHandler):
         # add new data point
         self.latest_point += 1
         if self.latest_point >= len(self.date_ix):
+            self.latest_point -= 1
             raise StopIteration
 
         # send market event

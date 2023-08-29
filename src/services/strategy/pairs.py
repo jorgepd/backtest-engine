@@ -34,13 +34,13 @@ class PairsTradingStrategy(BaseStrategy):
         # move generic properties to BaseStrategy
 
         # properties
-        self.strategy_id = str(uuid.uuid4())
+        self.strat_id = str(uuid.uuid4())
         self.bars = bars
         self.event_q = event_q
 
         # save info
         strategy_db.insert(pd.DataFrame({
-            'strat_id': [self.strategy_id],
+            'strat_id': [self.strat_id],
             'backtest_name': [bt_name],
             'type': [type],
             'symbol_A': [symbol_A],
@@ -97,8 +97,8 @@ class PairsTradingStrategy(BaseStrategy):
 
             # send orders
             self.trade_id = str(uuid.uuid4())
-            self.event_q.append(OrderEvent(self.strategy_id, self.trade_id, 'ENTRY', self.symbol_A, 'BUY', self.quantity_A))
-            self.event_q.append(OrderEvent(self.strategy_id, self.trade_id, 'ENTRY', self.symbol_B, 'SELL', self.quantity_B))
+            self.event_q.append(OrderEvent(self.strat_id, self.trade_id, 'ENTRY', self.symbol_A, 'BUY', self.quantity_A))
+            self.event_q.append(OrderEvent(self.strat_id, self.trade_id, 'ENTRY', self.symbol_B, 'SELL', self.quantity_B))
 
         # send exit signals, no minimum deviation
         limit, _, _ = _calc_BB(spread, self.exit_mult)
@@ -106,8 +106,8 @@ class PairsTradingStrategy(BaseStrategy):
             (self.trade_id is not None)
             and (spread[-1] > limit)
         ):
-            self.event_q.append(OrderEvent(self.strategy_id, self.trade_id, 'EXIT', self.symbol_A, 'SELL', self.quantity_A))
-            self.event_q.append(OrderEvent(self.strategy_id, self.trade_id, 'EXIT', self.symbol_B, 'BUY', self.quantity_B))
+            self.event_q.append(OrderEvent(self.strat_id, self.trade_id, 'EXIT', self.symbol_A, 'SELL', self.quantity_A))
+            self.event_q.append(OrderEvent(self.strat_id, self.trade_id, 'EXIT', self.symbol_B, 'BUY', self.quantity_B))
             self.trade_id = None
 
 

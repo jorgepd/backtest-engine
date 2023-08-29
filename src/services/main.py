@@ -7,6 +7,7 @@ def main_loop(bars, event_q, port, broker, strategies):
         try:
             bars.update_bars()
         except StopIteration:
+            port.close_positions()
             break
 
         # handle events queue

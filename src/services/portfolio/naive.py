@@ -3,6 +3,7 @@ import pandas as pd
 
 # custom imports
 from .base import BasePortfolio
+from src.db import trades_db
 
 
 
@@ -82,4 +83,37 @@ class NaivePortfolio(BasePortfolio):
 
 
     def _record_trade(self, event):
-        pass
+        trade = pd.DataFrame({
+            'strat_id': [event.strategy_id],
+            'trade_id': [event.trade_id],
+            'datetime': [self.bars.get_latest_date()],
+            'type': [event.desc],
+            'symbol': [event.symbol],
+            'direction': [event.direction],
+            'quantity': [event.quantity],
+            'price': [event.price],
+            'commission': [event.commission]
+        })
+        self.trades = pd.concat([self.trades, trade])
+
+
+    def close_positions(self):
+        self.trades = self.trades[:-2]
+        # base case
+        if self.trades.empty:
+            return self.trades
+
+        # already closed
+        last_trade = self.trades.iloc[-1]
+        if last_trade['type'] == 'EXIT':
+            return self.trades
+
+        # close last trades
+        exit_trades = self.trades.iloc[-2:].copy()
+        exit_trades['type'] = 'EXIT'
+        exit_trades['direction'] = exit_trades['direction'].apply(lambda x: 'BUY' if x == 'SELL' else 'SELL')
+        exit_trades['price'] = exit_trades.apply(lambda x: self.bars.get_latest_close(x['symbol'], n=1)[-1], axis=1)
+        self.trades = pd.concat([self.trades, exit_trades])
+
+        # save trades
+        trades_db.insert(self.trades)

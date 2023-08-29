@@ -8,17 +8,19 @@ from .helper import try_catch
 
 
 
-
 @try_catch
-def select(id=None):
+def select(bt_name=None, strat_id=None):
     query = f'''
     select *
     from tb_strategy_parameters
     where 1 = 1
     '''
 
-    if id is not None:
-        query += f' and strat_id = \'{id}\''
+    if bt_name is not None:
+        query += f' and backtest_name = \'{bt_name}\''
+
+    if strat_id is not None:
+        query += f' and strat_id = \'{strat_id}\''
 
     df = pd.read_sql(query, con=bt_engine)
     return df
@@ -30,10 +32,17 @@ def insert(df):
 
 
 @try_catch
-def delete(id):
+def delete(bt_name=None, strat_id=None):
     query = f'''
     delete from tb_strategy_parameters
-    where strat_id = '{id}'
+    where 1 = 1
     '''
+
+    if bt_name is not None:
+        query += f' and backtest_name = \'{bt_name}\''
+
+    if strat_id is not None:
+        query += f' and strat_id = \'{strat_id}\''
+
     with bt_engine.begin() as conn:
         r = conn.execute(text(query))

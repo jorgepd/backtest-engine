@@ -14,27 +14,26 @@ create table if not exists tb_strategy_parameters (
 
 create table if not exists tb_metrics (
     strat_id text primary key,
-    mean_performance real not null,
-    mean_time real not null,
-    count real not null,
-    count_win real not null,
-    pct_win real not null,
-    pct_win real not null,
-    win_mean_performance real not null,
-    loss_mean_performance real not null,
-    sharpe real not null
+    mean_performance real null,
+    mean_time real null,
+    count real null,
+    count_win real null,
+    pct_win real null,
+    win_mean_performance real null,
+    loss_mean_performance real null,
+    sharpe real null
 );
 
 
 create table if not exists tb_trades (
     id text primary key,
-    date text not null,
-    strategy_id text not null,
+    strat_id text not null,
     trade_id text not null,
+    datetime text not null,
     type text not null,
     symbol text not null,
     direction text not null,
-    quantity text not null,
-    price text not null,
-    commission text not null
+    quantity real not null,
+    price real not null,
+    commission real
 );
