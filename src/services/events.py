@@ -4,6 +4,10 @@ from abc import ABC
 
 
 class Event(ABC):
+    '''
+    The Event class is supposed to provide an interface
+    to system events.
+    '''
     pass
 
 

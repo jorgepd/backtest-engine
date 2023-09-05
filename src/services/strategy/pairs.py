@@ -13,7 +13,9 @@ from src.db import strategy_db
 
 class PairsTradingStrategy(BaseStrategy):
     '''
-    A pairs trading strategy that trades on mean reversion.
+    The PairsTradingStrategy class is a pairs trading
+    strategy operating on mean reversion with bollinger
+    bands.
     '''
 
     def __init__(self, bt_name, bars, event_q, type, symbol_A, symbol_B, lookback, entry_mult, exit_mult, order_size):

@@ -10,6 +10,10 @@ from src.db import market_data_db
 
 
 class HistoricDataHandler(BaseDataHandler):
+    '''
+    The HistoricDataHandler class reads historic data from
+    a database, and drip feeds it to the system.
+    '''
 
     def __init__(self, symbol_ls):
         self.symbol_ls = symbol_ls
